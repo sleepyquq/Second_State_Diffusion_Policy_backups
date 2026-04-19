@@ -1,0 +1,104 @@
+{
+  "PickCube-v1": {
+    "status": "OK",
+    "observation_space": {
+      "": {
+        "shape": [
+          1,
+          42
+        ],
+        "dtype": "float32",
+        "low_sample": [
+          -Infinity,
+          -Infinity,
+          -Infinity
+        ],
+        "high_sample": [
+          Infinity,
+          Infinity,
+          Infinity
+        ]
+      }
+    },
+    "action_space": {
+      "type": "Box",
+      "shape": [
+        8
+      ],
+      "dtype": "float32",
+      "low": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "high": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "random_50steps_reward": 2.023430611938238,
+    "random_50steps_success": 0
+  },
+  "PegInsertionSide-v1": {
+    "status": "OK",
+    "observation_space": {
+      "": {
+        "shape": [
+          1,
+          43
+        ],
+        "dtype": "float32",
+        "low_sample": [
+          -Infinity,
+          -Infinity,
+          -Infinity
+        ],
+        "high_sample": [
+          Infinity,
+          Infinity,
+          Infinity
+        ]
+      }
+    },
+    "action_space": {
+      "type": "Box",
+      "shape": [
+        8
+      ],
+      "dtype": "float32",
+      "low": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "high": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "random_50steps_reward": 1.7229513861238956,
+    "random_50steps_success": 0
+  }
+}

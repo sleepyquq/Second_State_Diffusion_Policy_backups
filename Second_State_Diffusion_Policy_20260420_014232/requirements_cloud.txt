@@ -1,0 +1,14 @@
+# 云端训练依赖清单
+# 建议先在 CUDA 镜像中单独安装匹配 CUDA 的 torch，再安装本文件。
+# 例如 CUDA 12.1:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+
+mani-skill==3.0.0b22
+gymnasium==0.29.1
+h5py>=3.10
+tqdm>=4.66
+numpy>=1.26
+scipy>=1.11
+matplotlib>=3.8
+opencv-python>=4.8
+huggingface_hub>=0.23
