@@ -1,0 +1,32 @@
+{
+  "env_info": {
+    "env_id": "PickCube-v1",
+    "env_kwargs": {
+      "num_envs": 1,
+      "reconfiguration_freq": 1,
+      "human_render_camera_configs": {
+        "shader_pack": "default"
+      },
+      "obs_mode": "state",
+      "render_mode": "rgb_array",
+      "sim_backend": "physx_cpu",
+      "control_mode": "pd_joint_delta_pos",
+      "reward_mode": null
+    },
+    "max_episode_steps": 50
+  },
+  "commit_info": null,
+  "episodes": [
+    {
+      "episode_id": 0,
+      "episode_seed": 138999277,
+      "control_mode": "pd_joint_delta_pos",
+      "elapsed_steps": 50,
+      "reset_kwargs": {
+        "options": null,
+        "seed": 138999277
+      },
+      "success": true
+    }
+  ]
+}
