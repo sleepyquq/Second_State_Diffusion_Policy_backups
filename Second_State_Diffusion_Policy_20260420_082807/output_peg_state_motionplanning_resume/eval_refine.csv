@@ -1,0 +1,16 @@
+checkpoint,epoch,env,episodes,max_steps,action_horizon,inference_steps,success_rate,mean_reward,mean_steps,n_episodes
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,250,8,20,20.0,68.30462457905523,229.7,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,250,10,20,40.0,83.98428992386907,213.1,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,250,12,20,30.0,76.26422612648457,219.4,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,250,14,20,30.0,78.01752010704949,214.8,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,250,16,20,10.0,76.23227760950104,236.5,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,300,8,20,30.0,71.58791404073126,244.5,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,300,10,20,20.0,90.17680518738925,271.0,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,300,12,20,30.0,95.63208479508758,256.8,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,300,14,20,20.0,93.66968389479443,269.0,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,300,16,20,30.0,101.29087170381099,260.2,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,350,8,20,40.0,88.94127186732366,272.4,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,350,10,20,60.0,86.33575796717778,230.3,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,350,12,20,40.0,93.90780360426808,272.5,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,350,14,20,10.0,119.89476390331984,330.7,10
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning_resume\checkpoints\policy_best.pt,124,PegInsertionSide-v1,10,350,16,20,10.0,115.88458305201493,331.2,10
