@@ -292,7 +292,7 @@ PegInsertionSide 当前基线：
 
 ## 9. 阶段备份
 
-按要求，每取得阶段性成果都备份到 `D:\备份`。本次主要备份点包括：
+每取得阶段性成果都备份到 `D:\备份`。本次主要备份点包括：
 
 - `D:\备份\Second_State_Diffusion_Policy_20260420_013127`
 - `D:\备份\Second_State_Diffusion_Policy_20260420_014232`
