@@ -16,6 +16,7 @@ ManiSkill3 专家演示数据收集脚本
   python collect_demos.py --env PickCube-v1 --obs-mode state --n-demos 100
 
   # 收集 PegInsertionSide rgbd 模式演示（200 条）
+  python collect_demos.py --env PegInsertionSide-v1 --obs-mode rgbd --n-demos 200
 
   # 查看已有数据集信息
   python collect_demos.py --info --dataset demos_PickCube-v1_state.h5
