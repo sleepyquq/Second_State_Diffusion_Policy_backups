@@ -1,0 +1,2 @@
+checkpoint,epoch,env,episodes,max_steps,action_horizon,inference_steps,success_rate,mean_reward,mean_steps,n_episodes
+D:\Second_State_Diffusion_Policy\output_peg_state_motionplanning\checkpoints\policy_last.pt,199,PegInsertionSide-v1,20,250,12,20,15.0,91.21175319054164,240.5,20
