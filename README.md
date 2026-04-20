@@ -64,8 +64,6 @@ $env:GIT_PYTHON_REFRESH='quiet'
 | `README.md` | 当前文件，说明如何复现、项目结构、数据与结果对应关系 |
 | `任务2_Diffusion_Policy训练技术记录.md` | 详细训练技术记录，包括障碍、分析、解决方法和阶段结果 |
 | `任务3_4_5成员分工与指导.md` | 面向后续成员的任务三、四、五分工与执行建议 |
-| `ManiSkill3_任务配置说明.md` | 原始 ManiSkill 任务配置说明 |
-| `交付_第二阶段_Diffusion_Policy实现说明.md` | 第二阶段实现说明 |
 | `提案.pdf` | 原提案材料 |
 
 ### 2.3 数据目录
@@ -427,7 +425,7 @@ output_peg_state_combined/
 
 ## 8. 备份
 
-按要求，阶段性成果已备份到：
+阶段性成果已备份到：
 
 ```text
 D:\备份
