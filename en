@@ -1,90 +1,127 @@
 # Task 2: Diffusion Policy Training Technical Record
-**Date:** April 20, 2026
-**Project Directory:** D:\Second_State_Diffusion_Policy
+
+**Date:** April 20, 2026  
+**Project Directory:** `D:\Second_State_Diffusion_Policy`
+
+---
+
 ## 1. Task Objectives
+
 The goal of Task 2 is to complete two Diffusion Policy baselines under standard ManiSkill task conditions:
- 1. **PickCube-v1**: Run the picking task and achieve convergence.
- 2. **PegInsertionSide-v1**: Run the insertion task and achieve convergence as much as possible.
- 3. **Deliverables**: Preserve training curves, evaluation data, checkpoints, logs, and OpenCV benchmark videos as a baseline for Tasks 3 and 4.
+
+1. **PickCube-v1**: Run the picking task and achieve convergence.
+2. **PegInsertionSide-v1**: Run the insertion task and achieve convergence as much as possible.
+3. **Deliverables**: Preserve training curves, evaluation data, checkpoints, logs, and OpenCV benchmark videos as a baseline for Tasks 3 and 4.
+
+---
+
 ## 2. Environment Setup
-The current machine is a newly created cloud instance (local equals cloud environment). Initially, the Python/pip environment lacked ManiSkill training dependencies, specifically Pinocchio. The resolution was as follows:
- 1. Installed **Python 3.11** and initially created a .venv.
- 2. Due to incomplete Pinocchio dependencies in Windows pip, switched to micromamba to create a .mambaenv.
- 3. Installed pinocchio via .mambaenv, then used pip for PyTorch CUDA and project dependencies.
- 4. **GPU Verification**:
-   * PyTorch: 2.5.1+cu121
-   * CUDA available: True
-   * GPU: NVIDIA GeForce RTX 3080
- 5. **Runtime Constants**:
-   * KMP_DUPLICATE_LIB_OK=TRUE: Bypasses OpenMP duplicate loading issues on Windows.
-   * GIT_PYTHON_REFRESH=quiet: Avoids GitPython errors caused by the absence of git.exe on the cloud host.
-> **Note on GPU Utilization:** Training runs on CUDA; however, the Windows Task Manager may default to 3D/Copy graphs rather than CUDA/Compute. Data replay and environment stepping also cause significant CPU usage, so the GPU may not show constant high load.
-> 
+
+The current machine is a newly created cloud instance. Initially, the Python/pip environment lacked ManiSkill training dependencies, specifically `Pinocchio`. The resolution was as follows:
+
+1. Installed **Python 3.11** and created a `.venv`.
+2. Due to incomplete `Pinocchio` dependencies in Windows pip, switched to `micromamba` to create a `.mambaenv`.
+3. Installed `pinocchio` via `.mambaenv`, then used pip for PyTorch CUDA and project dependencies.
+4. **GPU Verification**:
+    - PyTorch: `2.5.1+cu121`
+    - CUDA available: `True`
+    - GPU: `NVIDIA GeForce RTX 3080`
+5. **Runtime Constants**:
+    - `KMP_DUPLICATE_LIB_OK=TRUE`: Bypasses OpenMP duplicate loading issues on Windows.
+    - `GIT_PYTHON_REFRESH=quiet`: Avoids GitPython errors caused by the absence of `git.exe`.
+
+> [!NOTE]
+> **GPU Utilization:** Training runs on CUDA; however, Windows Task Manager may default to 3D/Copy graphs rather than CUDA/Compute. Data replay and environment stepping also cause significant CPU usage.
+
+---
+
 ## 3. Data Preparation
-While the original instructions mentioned pd_ee_delta_pose, the current ManiSkill version for these tasks uses pd_joint_delta_pos (Action Dimension: 8).
-Due to dependency issues with mplib on the local machine, official ManiSkill demos were downloaded and replayed:
- 1. **Download**:
-   * python -m mani_skill.utils.download_demo PickCube-v1 -o official_demos
-   * python -m mani_skill.utils.download_demo PegInsertionSide-v1 -o official_demos
- 2. **Replay**: Converted to state + pd_joint_delta_pos + physx_cpu format.
- 3. **Final Datasets**:
+
+While the original instructions mentioned `pd_ee_delta_pose`, the current ManiSkill version uses `pd_joint_delta_pos` (Action Dimension: 8). Official ManiSkill demos were replayed:
+
 | Task | Data Source | Trajectories | Remarks |
-|---|---|---|---|
+| :--- | :--- | :--- | :--- |
 | PickCube | motionplanning | 100 | Used for final picking training |
 | PegInsertionSide | motionplanning | 165 | Final insertion baseline |
 | PegInsertionSide | RL | 195 | Poor individual/combined performance |
 | PegInsertionSide | combined | 360 | MP + RL; ultimately discarded |
+
+---
+
 ## 4. Code Modifications
-The original training script was unstable. Key modifications include:
- * **collect_demos.py**: Added support for ManiSkill official traj_* HDF5 structures and handled alignment/clipping for obs (length T+1) and actions (length T).
- * **train_dp.py**:
-   * Fixed DDPMScheduler register_buffer issues.
-   * Corrected timestep sinusoidal embedding dtype.
-   * Implemented deterministic **DDIM-style sampling** to replace unstable reverse sampling.
-   * Changed action normalization clipping from [-1, 1] to [-5, 5] in normalized space before de-normalization.
-   * Added **Positional Embeddings (pos_emb)** to the action sequence for sequence order awareness.
-   * Implemented **Receding Horizon** during evaluation (executing action_horizon steps per sampling).
- * **New Scripts**:
-   * evaluate_checkpoint.py: For batch comparison of hyperparameters (horizon, steps, etc.).
-   * record_policy_video.py: Rollout recording using OpenCV cv2.VideoWriter.
+
+Key modifications to the training scripts:
+
+* **`collect_demos.py`**: Added support for ManiSkill official `traj_*` HDF5 structures and handled alignment for `obs` (T+1) and `actions` (T).
+* **`train_dp.py`**:
+    * Fixed `DDPMScheduler` `register_buffer` issues.
+    * Implemented deterministic **DDIM-style sampling** to replace unstable reverse sampling.
+    * Added **Positional Embeddings (`pos_emb`)** to the action sequence.
+    * Implemented **Receding Horizon** during evaluation (executing `action_horizon` steps per sampling).
+* **New Utility Scripts**:
+    - `evaluate_checkpoint.py`: For batch comparison of hyperparameters.
+    - `record_policy_video.py`: Rollout recording using OpenCV.
+
+---
+
 ## 5. PickCube: Training & Results
-After fixing the planning stability and adding positional embeddings, the final model achieved:
+
+Final model performance after fixing planning stability:
+
 | Metric | Value |
-|---|---|
+| :--- | :--- |
 | **Final Success Rate** | **100.0%** |
 | Eval Episodes | 10 |
 | Avg Reward | 20.41 |
 | Avg Steps | 66.2 |
 | Final Loss | ~0.0504 |
-**Artifacts**: policy_best.pt, metrics.csv, training_curves.png, pickcube_baseline.mp4.
+
+---
+
 ## 6. PegInsertionSide: Training & Results
-Peg insertion proved significantly harder, particularly in the final precision phase.
-### 6.1 Motion Planning Data Training
-Training on 165 motion planning trajectories for 200 epochs showed improved rewards (~60), but terminal insertion remained unstable.
-### 6.2 Resumed Training
-Resuming training for an additional 250 epochs with a lower learning rate (5e-5) yielded the best results:
+
+Peg insertion is significantly harder, particularly in the final precision phase.
+
+### 6.1 Resumed Training Results
+Resuming training for an additional 250 epochs with a lower learning rate (`5e-5`):
+
 | Epoch | Train Loss | Eval Success | Mean Reward | Mean Steps |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | 125 | 0.0368 | 50.0% | 69.36 | 195.6 |
 | 250 | 0.0308 | 40.0% | 76.75 | 210.3 |
-**Large Sample Confirmation**:
- * action_horizon=12, max_steps=250: **30.0% Success** (30 episodes).
- * action_horizon=10, max_steps=350: **30.0% Success** (30 episodes).
+
+**Large Sample Confirmation (30 episodes)**:
+- `action_horizon=12, max_steps=250`: **30.0% Success**
+- `action_horizon=10, max_steps=350`: **30.0% Success**
+
+---
+
 ## 7. OpenCV Benchmark Videos
-Videos were generated using record_policy_video.py with the --require-success flag:
- * **PickCube**: Seed 0, Success in 69 steps.
- * **PegInsertionSide**: Seed 9, Success in 191 steps.
+
+Videos generated with `--require-success`:
+- **PickCube**: Seed 0, Success in 69 steps.
+- **PegInsertionSide**: Seed 9, Success in 191 steps.
+
+---
+
 ## 8. Current Final Artifacts
- * **Checkpoints**: policy_best.pt for both tasks.
- * **Logs**: Comprehensive logs stored in logs/.
- * **Videos**: pickcube_baseline.mp4, peg_baseline.mp4.
- * **Data**: metrics.csv and training_curves.png for performance tracking.
+
+* **Checkpoints**: `policy_best.pt` for both tasks.
+* **Logs**: Stored in `logs/`.
+* **Visuals**: `metrics.csv`, `training_curves.png`, and `.mp4` baseline videos.
+
+---
+
 ## 9. Backup History
-Phase backups are stored in D:\备份, including timestamps from 20260420_013127 through 20260420_082807.
+
+Phase backups are stored in `D:\备份` with timestamps from `20260420_013127` through `20260420_082807`.
+
+---
+
 ## 10. Future Recommendations
- 1. **PickCube**: Ready for immediate use in Task 3/4 as a stable baseline.
- 2. **Peg**: Currently a reproducible baseline, but success rates can be improved. Suggested next steps:
-   * Transition to a stronger policy network (e.g., 1D UNet).
-   * Increase high-quality motion planning data instead of mixing RL data.
-   * Perform fine-grained search on action_horizon for the terminal insertion phase.
-   * Analyze failure cases near the success boundary to identify if errors are due to alignment, depth, or action saturation.
+
+1. **PickCube**: Use as a stable baseline for Task 3/4.
+2. **Peg**: Success rates can be improved by:
+    - Transitioning to a **1D UNet** policy network.
+    - Increasing high-quality motion planning data.
+    - Analyzing failure cases to see if errors occur during alignment or insertion depth phases.
