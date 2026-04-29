@@ -1,5 +1,4 @@
 
-```markdown
 # Task 2: Diffusion Policy Training Technical Record
 
 **Record Time:** April 20, 2026  
